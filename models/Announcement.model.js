@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const announcementSchema = new Schema({
-    userId: { type: Number },
+    userId: { type: Schema.Types.ObjectId, ref: "User" },
     skill: { type: String, required: true, maxlength: 50 },
     description: {type: String, required: true, maxlength: 250 },
 }, {

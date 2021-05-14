@@ -20,21 +20,6 @@ router.get("/:id", (req, res, next) => {
     .catch(err => res.status(500).json(err))
 })
 
-//CREATE: Create user
-router.post("/", async (req, res, next) => {
-    console.log('Inside router.post(/)')
-    const { name, password, email, profilePicture } = req.body;
-    if(!email){
-        return res.status(400).json({ message: "email is required"});
-    }
-    try {
-        const user = await User.create({ name, password, email, profilePicture });
-    return res.status(200).json(user);
-    } catch(err){
-    return res.status(500).json(err)
-    }
-})
-
 //UPDATE: Update user
 router.put("/:id", (req, res, next) => {
     console.log('Inside "router.put(/:id)')
