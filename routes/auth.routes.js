@@ -8,7 +8,7 @@ const bcrypt = require('bcryptjs');
 const uploader = require('../configs/cloudinary.config');
 const bcryptSalt = 10;
 
-//SIGNUP
+//CREATE USER (SIGNUP)
 router.post('/signup', (req, res, next) => {
     const { name, password, email, profilePicture } = req.body;
     if(password.length < 3){
@@ -55,28 +55,28 @@ router.post('/login', (req, res, next) => {
         return res.status(200).json(theUser);
         })
     })(req, res, next)
-    })
+})
 
-    //LOGOUT
-    router.post('/logout', (req, res, next) => {
+//LOGOUT
+router.post('/logout', (req, res, next) => {
     req.logout();
     return res.status(200).json({ message: 'Log out success!'});
-    })
+})
 
-    //EDIT
-    router.put('/edit', uploader.single('photo'), (req, res, next) => {
+//EDIT
+router.put('/edit', uploader.single('photo'), (req, res, next) => {
     User.findOneAndUpdate({ _id: req.user.id }, { ...req.body, photo: req.file ? req.file.path : req.user.photo }, { new: true })
     .then(user => res.status(200).json(user))
     .catch(error => res.status(500).json(error))
-    })
+})
 
-    //ISAUTHENTICATED
-    router.get('/loggedin', (req, res, next) => {
+//ISAUTHENTICATED
+router.get('/loggedin', (req, res, next) => {
     if(req.isAuthenticated()){
         return res.status(200).json(req.user);
     } else {
         return res.status(403).json({ message: 'Forbbiden' });
     }
-    })
+})
     
 module.exports = router;

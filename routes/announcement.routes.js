@@ -43,7 +43,7 @@ router.post("/", async (req, res, next) => {
         return res.status(400).json({ message: "Skill is required"});
     }
     try {
-        const announcement = await Announcement.create({ userId, skill, description, user: req.user.id  });
+        const announcement = await Announcement.create({ skill, description, userId: req.user.id });
     return res.status(200).json(announcement);
     } catch(err){
     return res.status(500).json(err)
@@ -51,21 +51,23 @@ router.post("/", async (req, res, next) => {
 })
 
 //Update an announcement
-//Postman FAILED
+//Postman Ok
+//TODO: Same problem about user validation an isLoggedIn
 router.put("/:id", (req, res, next) => {
     console.log('Inside annoucement.routes.js router.put(/:id)')
     const { id } = req.params;
-    Announcement.findOneAndUpdate({ _id: id, user: req.user.id  }, req.body, {new: true})
+    Announcement.findOneAndUpdate({ _id: id }, req.body, {new: true})
     .then(announcement => res.status(200).json(announcement))
     .catch(err => res.status(500).json(err))
 })
 
 //Delete an announcement
 //Postman FAILED
+//TODO: Same problem about user validation an isLoggedIn
 router.delete("/:id", (req, res, next) => {
     console.log('Inside router.delete(/:id)')
     const { id } = req.params;
-    Announcement.findOneAndDelete({ _id: id, user: req.user.id  })
+    Announcement.findOneAndDelete({ _id: id })
     .then(() => res.status(200).json({ message: `Announcement ${id} deleted 🗑`}))
     .catch(err => res.status(500).json(err))
 })
