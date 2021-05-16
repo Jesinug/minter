@@ -56,7 +56,7 @@ router.post("/", async (req, res, next) => {
 router.put("/:id", (req, res, next) => {
     console.log('Inside annoucement.routes.js router.put(/:id)')
     const { id } = req.params;
-    Announcement.findOneAndUpdate({ _id: id }, req.body, {new: true})
+    Announcement.findOneAndUpdate({ _id: id, userId: req.user.id }, req.body, {new: true})
     .then(announcement => res.status(200).json(announcement))
     .catch(err => res.status(500).json(err))
 })
@@ -67,7 +67,7 @@ router.put("/:id", (req, res, next) => {
 router.delete("/:id", (req, res, next) => {
     console.log('Inside router.delete(/:id)')
     const { id } = req.params;
-    Announcement.findOneAndDelete({ _id: id })
+    Announcement.findOneAndDelete({ _id: id, user: req.user.id })
     .then(() => res.status(200).json({ message: `Announcement ${id} deleted 🗑`}))
     .catch(err => res.status(500).json(err))
 })
