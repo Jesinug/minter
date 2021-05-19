@@ -9,7 +9,7 @@
     "dev": "nodemon -e '*' ./bin/www"
   },
   "engines": {
-    "node": "15.x"
+    "node": "14.15.1"
   },
   "keywords": [],
   "author": "",
@@ -40,6 +40,6 @@
   },
   "bugs": {
     "url": "https://github.com/Jesinug/minter-backend/issues"
-  },
-  "homepage": "https://github.com/Jesinug/minter-backend#readme"
+  }
+
 }
