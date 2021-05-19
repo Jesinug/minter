@@ -1,4 +1,5 @@
 const express = require('express');
+const Announcement = require('../models/Announcement.model');
 const User = require('../models/User.model');
 const router = express.Router();
 
@@ -13,6 +14,12 @@ router.get("/", (req, res, next) => {
     .catch(err => res.status(500).json(err))
 })
 
+router.get("/announcements", (req, res, next) => {
+    console.log('_id: req.user.id ', {_id: req.user.id} )
+    Announcement.find({ userId: req.user.id  })
+    .then(announcements => res.status(200).json(announcements))
+    .catch(err => res.status(500).json(err))
+})
 
 //READ: Find a single user
 //Postman FAILED
@@ -37,10 +44,9 @@ router.put("/:id", (req, res, next) => {
 
 //DELETE
 //TODO: Same problem about user validation an isLoggedIn
-router.delete("/:id", (req, res, next) => {
+router.delete("/", (req, res, next) => {
     console.log('Inside "router.delete(/:id)')
-    const { id } = req.params;
-    User.findOneAndRemove({ _id: id, user: req.user.id  })
+    User.findOneAndDelete({ _id: req.user.id  })
     .then(() => res.status(200).json({ message: `User ${id} deleted 🗑`}))
     .catch(err => res.status(500).json(err))
 })

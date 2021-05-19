@@ -7,7 +7,13 @@ const router = express.Router();
 router.get("/", (req, res, next) => {
     console.log('Inside router.get(/)')
     console.log(req.user)
-    Announcement.find()
+    let promise 
+    if ( req.user ) {
+        promise = Announcement.where('userId').ne(req.user.id)
+    } else {
+        promise = Announcement.find()
+    }
+    promise
     .then(announcement =>  res.status(200).json(announcement))
     .catch(err => res.status(500).json(err))
 })
@@ -67,7 +73,7 @@ router.put("/:id", (req, res, next) => {
 router.delete("/:id", (req, res, next) => {
     console.log('Inside router.delete(/:id)')
     const { id } = req.params;
-    Announcement.findOneAndDelete({ _id: id, user: req.user.id })
+    Announcement.findOneAndDelete({ _id: id, userId: req.user.id })
     .then(() => res.status(200).json({ message: `Announcement ${id} deleted 🗑`}))
     .catch(err => res.status(500).json(err))
 })
