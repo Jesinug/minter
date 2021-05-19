@@ -9,7 +9,8 @@ module.exports = (app) => {
             origin: [
                 process.env.PUBLIC_DOMAIN,
                 'http://minter-app.herokuapp.com',
-                'https://minter-app.herokuapp.com'
+                'https://minter-app.herokuapp.com',
+                'http://localhost:3000'
             ]
         })
     )
