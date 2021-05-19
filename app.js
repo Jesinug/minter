@@ -1,6 +1,6 @@
 require('dotenv').config();
 const express = require('express');
-
+const path = require('path');
 // DB config
 require('./configs/db.config');
 const app = express();
@@ -22,11 +22,9 @@ app.use('/api/auth', authRouter);
 app.use('/api/user', userRouter);
 
 // ROUTE FOR SERVING REACT APP (index.html)
-app.use((req, res, next) => {
-    // If no previous routes match the request, send back the React app.
-    res.sendFile(__dirname + "/public/index.html");
-});
-
+app.use('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public/index.html'));
+    });
 //ERROR HANDLING
 app.use((req, res) => {
     return res.status(404).json({ message: "Not found"});
