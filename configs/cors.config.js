@@ -6,7 +6,11 @@ module.exports = (app) => {
     app.use(
         cors({
             credentials: true,
-            origin: [process.env.PUBLIC_DOMAIN]
+            origin: [
+                process.env.PUBLIC_DOMAIN,
+                'http://minter-app.herokuapp.com',
+                'https://minter-app.herokuapp.com'
+            ]
         })
     )
- }
+}

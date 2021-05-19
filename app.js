@@ -19,7 +19,18 @@ const userRouter = require('./routes/users.routes')
 
 app.use('/api/announcement', announcementRouter);
 app.use('/api/auth', authRouter);
-app.use('/api/user', userRouter)
+app.use('/api/user', userRouter);
+
+// ROUTE FOR SERVING REACT APP (index.html)
+app.use((req, res, next) => {
+    // If no previous routes match the request, send back the React app.
+    res.sendFile(__dirname + "/public/index.html");
+});
+
+//ERROR HANDLING
+app.use((req, res) => {
+    return res.status(404).json({ message: "Not found"});
+})
 
 module.exports = app;
 
