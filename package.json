@@ -9,7 +9,7 @@
     "dev": "nodemon -e '*' ./bin/www"
   },
   "engines": {
-    "node": "15.x"
+    "node": "15.14.0"
   },
   "keywords": [],
   "author": "",
